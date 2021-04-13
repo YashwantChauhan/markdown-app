@@ -9,7 +9,7 @@ const methodOverride = require('method-override')
 app.use(methodOverride('_method'))
 
 const Article = require('./models/article');
-mongoose.connect('mongodb://localhost:27017/blog' , { useNewUrlParser: true,  useUnifiedTopology: true , useCreateIndex : true, useFindAndModify : false } )
+mongoose.connect('mongodb+srv://Yashwant:Yashwant@170301@cluster0.xubvb.mongodb.net/blog?retryWrites=true&w=majority' , { useNewUrlParser: true,  useUnifiedTopology: true , useCreateIndex : true, useFindAndModify : false } )
 
 
 app.use(express.urlencoded({ extended : false }));
