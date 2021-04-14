@@ -14,7 +14,8 @@ const articleSchema = new mongoose.Schema({
         type: String
     },
     markdown : {
-        type : String
+        type : String,
+        required : true
     },
     createdAT : {
         type : Date,
@@ -33,13 +34,19 @@ const articleSchema = new mongoose.Schema({
 });
 
 articleSchema.pre('validate', function(next){
+
+    
     if(this.title){
         this.slug = slugify(this.title, { lower: true, strict: true })
     }
+
     if(this.markdown){
         this.sanitizedHTML = dompurify.sanitize(marked(this.markdown))
+        
     }
     next()
-})
+  
+});
+
 
 module.exports = mongoose.model('Article', articleSchema);

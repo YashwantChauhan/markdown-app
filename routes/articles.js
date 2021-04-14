@@ -60,12 +60,22 @@ router.get('/edit/:id', async (req,res)=>{
 
 router.post('/edit/:id', async (req,res)=>{
     
-    await Article.findByIdAndUpdate(req.params.id , {
-        title : req.body.title,
-        description : req.body.desc,
-        markdown : req.body.mark
-    });
-    res.redirect('/')
+    let article = await Article.findById(req.params.id);
+     
+
+    article.title = req.body.title
+    article.description = req.body.desc,
+    article.markdown = req.body.mark
+
+    try{
+
+        article = await article.save()
+        res.redirect(`/articles/${article.slug}`); 
+  
+      }
+      catch(e){
+          res.render(`articles/edit` , { articles : article })
+      }
 
 })
 module.exports = router
